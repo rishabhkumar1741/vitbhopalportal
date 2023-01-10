@@ -1,0 +1,96 @@
+@media only screen and (min-width: 325px){
+    
+    .nav{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+        height: 100px;
+    }
+    .nav > img{
+        width: 150px;
+    
+    }
+    .nav>h1{
+        display: none;
+    }
+    .nav-buttons{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .nav_buttons > button{ 
+        padding: 1rem 1.5rem;
+        border-radius: 1rem;
+        margin-right: 1rem;
+    }
+    .register_button{
+        background-color: #33cabb;
+        color: white;
+        border: none;
+    }
+    .register_button:hover{
+        background-color: #21d4c2;
+        cursor: pointer;
+    }
+    .log_in_button{
+        color: gray;
+        background-color: white;
+        border: none;
+    }
+    .log_in_button:hover{
+        cursor: pointer;
+        color: black;
+
+    }
+}
+
+
+@media only screen and (min-width: 600px){
+    
+    .nav > img{
+        width: 150px;
+    }
+    .nav >h1{
+        display: block;
+        font-size: 3rem;
+        font-weight: bold;
+        color: #484798;
+    }
+    .nav{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+    }
+    .nav-buttons{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .nav_buttons > button{ 
+        padding: 1rem 1.5rem;
+        border-radius: 1rem;
+        margin-right: 2rem;
+    }
+    .register_button{
+        background-color: #33cabb;
+        color: white;
+        border: none;
+    }
+    .register_button:hover{
+        background-color: #21d4c2;
+        cursor: pointer;
+    }
+    .log_in_button{
+        color: gray;
+        background-color: white;
+        border: none;
+    }
+    .log_in_button:hover{
+        cursor: pointer;
+        color: black;
+
+    }
+    
+}
