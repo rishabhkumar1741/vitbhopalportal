@@ -13,7 +13,7 @@ function Navbar() {
 
     }
     return (
-        <nav className={style.nav}>
+        <nav className={`${style.nav} bg-blue-600`}>
             <img src='/vit-logo-1.png' alt="img" />
             <h1>VIT BHOPAL</h1>
             <div className={style.nav_buttons}><button onClick={signout}  className='bg-red-500 hover:bg-red-700 text-white font-bold  px-4 rounded-full'>signOut</button></div>
