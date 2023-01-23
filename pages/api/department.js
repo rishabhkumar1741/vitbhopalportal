@@ -2,68 +2,43 @@ export default function handler(req, res) {
     const data = [
         {
           "key": 1,
-          "course_name": "College",
-          "Img": "B.Tech.jpg",
-          "fullform":"Bachelor of Technology",
+          "Img": "hostel.png",
+          "fullform":"Hostel",
           "url":"/hostel"
           
         },
         {
           "key": 2,
-          "course_name": "B.Arch",
-          "Img": "B.Arch.jpg",
-          "fullform":"Bachelor of Architecture",
-          "url":"/"
+          "Img": "univ.png",
+          "fullform":"Academic Block",
+          "url":"/hostel"
         },
         {
           "key": 3,
-          "course_name": "BBA",
-          "Img": "BBA.jpg",
-          "fullform":"Bachelor of Business Administration",
-          "url":"/"
+          "Img": "it.png",
+          "fullform":"IT Department",
+          "url":"/hostel"
         },
         {
           "key": 4,
-          "course_name": "MBA",
-          "Img": "MBA.jpg",
-          "fullform":"Master of Business Administration",
-          "url":"/"
+          "Img": "mess.png",
+          "fullform":"Mess",
+          "url":"/hostel"
         },
         {
           "key": 5,
-          "course_name": "Integrated M.Sc. Biotechnology Programme ",
-          "Img": "M.Sc.jpg",
-          "fullform":"Master of Science",
-          "url":"/"
+        
+          "Img": "canteen.jpg",
+          "fullform":"Under Belly",
+          "url":"/hostel"
         },
         {
           "key": 6,
-          "course_name": "M.Tech. Programme",
-          "Img": "M.Tech.jpg",
-          "fullform":"Master of Technology",
-          "url":"/"
-        },
-        {
-          "key": 7,
-          "course_name": "Integrated M.Tech. Programme",
-          "Img": "Integrated_M.Tech.jpg",
-          "fullform":"Master of Technology",
-          "url":"/"
-        },
-        {
-          "key": 8,
-          "course_name": "MCA",
-          "Img": "MCA-1.jpg",
-          "fullform":"Masters in Computer Application",
-          "url":"/"
-        },
-        {
-          "key": 9,
-          "course_name": "ph.D Programme",
-          "Img": "ph.d.jpg",
-          "fullform":"Doctor of Philosophy",
-          "url":"/"
-        },
+         
+          "Img": "library.png",
+          "fullform":"Library",
+          "url":"/hostel"
+        }
       ]
       res.status(200).json({data: data })
     

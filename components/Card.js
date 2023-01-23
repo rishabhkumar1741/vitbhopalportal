@@ -1,18 +1,16 @@
-import style from '../styles/Card.module.css'
+import Image from 'next/image';
 import Link from 'next/link';
 function Card(props) {
     return (
-        <Link href={props.url}>
-            <div className={style.my_card} >
-                <img src={props.Img} alt="" />
-                <div className={style.my_cardTitle}>
-                    <h1>{props.course_name}</h1>
-                    <p>{props.fullform}</p>
+        <div className='w-96 rounded-lg mb-10'>
+            <Link className='block' href={props.url}>
+                <Image width='350' height='350' className='object-cover h-full w-full rounded-t-lg ' src={`/${props.Img}`} alt="" />
+                <div className=''>
+                    <h1 className='text-center font-serif font-bold text-lg'> {props.fullform}</h1>
+
                 </div>
-            </div>
-
-
-        </Link>
+            </Link>
+        </div>
     )
 }
 

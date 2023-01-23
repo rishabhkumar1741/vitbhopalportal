@@ -48,7 +48,7 @@ export default function Home(props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar></Navbar>
-      <div className={deCss.Mycontainer}>
+      <div className="my-16 mx-20  flex justify-between flex-wrap  ">
         {cards}
       </div>
     </div>
