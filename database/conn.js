@@ -5,7 +5,7 @@ const connectMongo = async ()=>{
     try {
         
         const {connect} = await mongoose.connect(process.env.MONGO_URL,()=>{
-            console.log("rishabh");
+            
         })
 
         if(connect.readyState==1)
@@ -20,3 +20,4 @@ const connectMongo = async ()=>{
 export default connectMongo;
 
 
+ 

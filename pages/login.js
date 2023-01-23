@@ -7,36 +7,59 @@ import { useFormik } from 'formik'
 import login_validate from "../lib/validate"
 import { useSession, signIn, signOut } from 'next-auth/react'
 import { useRouter } from "next/router"
+import { decode } from "jsonwebtoken"
 
 
 
 
-export default function Login() {
+
+
+export default function Login(props) {
+    
+    
+ 
     const router = useRouter();
+    const [logindata, setlogindata] = useState({
+        email: "",
+        password: ""
+    });
 
-    const formik = useFormik({
-        initialValues: {
-            email: "",
-            password: ""
-        },
-        validate: login_validate,
-        onSubmit: onSubmit
-    })
-    console.log(formik.errors);
+    function loginformdata(event) {
+        const name = event.target.name;
+        const value = event.target.value;
+        setlogindata((pre) => {
+            return { ...pre, [name]: value }
+        })
 
-    async function onSubmit(values) {
-        const status = await signIn('credentials',{
-            redirect:false,
-            email:values.email,
-            password:values.password,
-            callbackUrl:'/'
+    }
+    async function loginsubmitdata(event) {
+        event.preventDefault();
+        const option = {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(logindata)
         }
-        )
-        if(status.ok)
+        setlogindata(() => {
+            return {
+                email:"",
+                password: ""
+            }
+        })
+
+        const res = await fetch('http://localhost:3000/api/auth/login', option)
+        const response  = await res.json();
+        if(response.status)
         {
-            router.push(status.url)
+            localStorage.setItem('token',response.token)
+            router.push('/')
+        }
+        else{
+            router.push('/login')
         }
     }
+
+
+
 
 
     return <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-100">
@@ -67,24 +90,24 @@ export default function Login() {
                             </button>
                         </div>
                         <p className="text-gray-400 my-3">or use your email account  </p>
-                        <form className="flex flex-col items-center" onSubmit={formik.handleSubmit}>
-                            <div className={`${formik.errors.email && formik.touched.email ?'':''}bg-gray-100 w-64 p-2    flex items-center mb-3`}>
+                        <form className="flex flex-col items-center" onSubmit={loginsubmitdata}>
+                            <div className={`bg-gray-100 w-64 p-2    flex items-center mb-3`}>
                                 <FaRegEnvelope className="text-gray-400 m-2" />
-                                <input {...formik.getFieldProps('email')} type="email" name="email" 
-                                placeholder="Email" className="bg-gray-100 outline-none flex-1" />
-                                
+                                <input onChange={loginformdata} type="email" name="email"
+                                    placeholder="Email" className="bg-gray-100 outline-none flex-1" />
+
                             </div>
                             <div className="mb-1">
-                            
+
                             </div>
 
                             <div className="bg-gray-100 w-64 p-2 flex items-center mb-3 ">
                                 <MdLockOutline className="text-gray-400 m-2" />
-                                <input {...formik.getFieldProps('password')} type="password" name="password" placeholder="password" className={`${formik.errors.email && formik.touched.email ? 'border-rose-500' :'border-gray-200'} bg-gray-100 outline-none flex-1`} />
-                                
+                                <input onChange={loginformdata} type="password" name="password" placeholder="password" className={`bg-gray-100 outline-none flex-1`} />
+
                             </div>
                             <div className="mb-1">
-                            {formik.errors.password && formik.touched.password ?<span className="text-red-500">{formik.errors.password}</span>:<></>}
+
                             </div>
                             <div className="flex justify-between w-64 mb-5">
                                 <label className="flex items-center text-xs"> <input type='checkbox' name="remember" className="mr-1" /> Remember me</label>
