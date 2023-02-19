@@ -11,13 +11,8 @@ import { decode } from "jsonwebtoken"
 
 
 
-
-
-
 export default function Login(props) {
-    
-    
- 
+
     const router = useRouter();
     const [logindata, setlogindata] = useState({
         email: "",
@@ -41,19 +36,18 @@ export default function Login(props) {
         }
         setlogindata(() => {
             return {
-                email:"",
+                email: "",
                 password: ""
             }
         })
 
         const res = await fetch('http://localhost:3000/api/auth/login', option)
-        const response  = await res.json();
-        if(response.status)
-        {
-            localStorage.setItem('token',response.token)
+        const response = await res.json();
+        if (response.status) {
+            localStorage.setItem('token', response.token)
             router.push('/')
         }
-        else{
+        else {
             router.push('/login')
         }
     }

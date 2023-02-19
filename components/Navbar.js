@@ -1,23 +1,49 @@
 import Image from 'next/image';
+import Link from 'next/link';
+import { useState } from 'react';
 
-
-import { useRouter } from 'next/router';
 
 function Navbar() {
-    const Router = useRouter();
-
-    function signout() {
-        localStorage.removeItem('token');
-        Router.push('/login')
-
+    const [toggle, settoggle] = useState(false);
+    function onofftoggle()
+    {
+        settoggle((prev)=>{
+            return !prev
+        });
     }
+
     return (
-        <nav className={`flex justify-between h-16 bg-blue-400 px-2 `}>
+        <nav className={`flex justify-between items-center h-16 bg-blue-400 px-2 `}>
             <div className='flex items-center'>
                 <Image className='text-white w-10' width='20' height='20' src='/vit_logo.png' alt="img" ></Image>
-                <h1 className='font-serif font-bold text-white text-lg ml-4'>VIT BHOPAL TICKETING SYSYTEM</h1>
+                <h1 className='font-sans font-bold text-white text-lg ml-4'>VIT BHOPAL TICKETING SYSYTEM</h1>
             </div>
-            <div className="flex items-center"><button onClick={signout} className='bg-red-500 hover:bg-red-700 text-white font-bold  px-5 py-2  rounded-full'>signOut</button></div>
+            <div className="mr-2  ">
+                <div className='relative'>
+                    <div onClick={onofftoggle}>
+                        <span className='cursor-pointer text-white block '>
+                            <svg viewBox="0 0 28 28" fill="currentColor" height="28" width="28"><path d="M23.5 4a1.5 1.5 0 110 3h-19a1.5 1.5 0 110-3h19zm0 18a1.5 1.5 0 110 3h-19a1.5 1.5 0 110-3h19zm0-9a1.5 1.5 0 110 3h-19a1.5 1.5 0 110-3h19z"></path>
+                            </svg>
+                        </span>
+                    </div>
+                    <div className={`${toggle ? 'block' : 'hidden'} w-40  bg-gray-50 absolute top-8 rounded-md  p-5 right-0 font-bold `}>
+                        <ul>
+                            <li className='hover:text-blue-400 m-2'><Link href='/'>HOME</Link></li>
+                            <li className='hover:text-blue-400 m-2'><Link href='/'>Explore</Link></li>
+                            <li className='hover:text-blue-400 m-2'><Link href='/'>Messages</Link></li>
+                            <li className='hover:text-blue-400 m-2'><Link href='/'>Bookmarks</Link></li>
+                            <li className='hover:text-blue-400 m-2'><Link href='/'>Profile</Link></li>
+                        </ul>
+
+                    </div>
+                </div>
+
+
+
+
+
+
+            </div>
 
         </nav>)
 }
