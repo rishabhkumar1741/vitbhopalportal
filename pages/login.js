@@ -3,11 +3,9 @@ import { FaFacebookF, FaLinkedinIn, FaGoogle, FaRegEnvelope, FaGithub, FaSignInA
 import { MdLockOutline } from 'react-icons/md'
 import Link from "next/link"
 import { useState } from "react"
-import { useFormik } from 'formik'
-import login_validate from "../lib/validate"
-import { useSession, signIn, signOut } from 'next-auth/react'
+
 import { useRouter } from "next/router"
-import { decode } from "jsonwebtoken"
+
 
 
 
