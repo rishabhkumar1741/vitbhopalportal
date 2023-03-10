@@ -125,7 +125,7 @@ export default function carpenter() {
         <div className="grid h-screen place-items-center ">
             <div className="shadow-2xl p-10 pt-2  srounded-2xl">
                 <div className='bg-blue-500 text-white m-0 rounded-t-sm py-2 mb-4  text-center font-bold '>
-                    Raise a Hostel Ticket
+                    Raise a Academic Ticket
                 </div>
                 <form className="w-full max-w-lg ">
                     <div className="flex flex-wrap -mx-3 mb-4">

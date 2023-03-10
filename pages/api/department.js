@@ -11,7 +11,7 @@ export default function handler(req, res) {
           "key": 2,
           "Img": "univ.png",
           "fullform":"Academic Block",
-          "url":"/hostel"
+          "url":"/academic"
         },
         {
           "key": 3,
