@@ -3,7 +3,7 @@ import { FaFacebookF, FaLinkedinIn, FaGoogle, FaRegEnvelope, FaGithub, FaSignInA
 import { MdLockOutline } from 'react-icons/md'
 import Link from "next/link"
 import { useState } from "react"
-
+import { signIn } from 'next-auth/react';
 import { useRouter } from "next/router"
 
 
@@ -12,6 +12,7 @@ import { useRouter } from "next/router"
 export default function Login(props) {
 
     const router = useRouter();
+    const [erroestate,seterrorstate] = useState(false);
     const [logindata, setlogindata] = useState({
         email: "",
         password: ""
@@ -25,29 +26,25 @@ export default function Login(props) {
         })
 
     }
-    async function loginsubmitdata(event) {
-        event.preventDefault();
-        const option = {
-            method: "POST",
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(logindata)
-        }
-        setlogindata(() => {
-            return {
-                email: "",
-                password: ""
-            }
-        })
 
-        const res = await fetch('http://localhost:3000/api/auth/login', option)
-        const response = await res.json();
-        if (response.status) {
-            localStorage.setItem('token', response.token)
-            router.push('/')
+   
+
+    const handleAuth = async (event) => {
+        event.preventDefault();
+        const res = await signIn('credentials', {
+            ...logindata,
+            redirect: false
+        })
+        if(res.ok)
+        {
+            router.push("/")
         }
-        else {
-            router.push('/login')
+        else{
+            seterrorstate(true);
         }
+
+
+
     }
 
 
@@ -82,11 +79,11 @@ export default function Login(props) {
                             </button>
                         </div>
                         <p className="text-gray-400 my-3">or use your email account  </p>
-                        <form className="flex flex-col items-center" onSubmit={loginsubmitdata}>
+                        <form className="flex flex-col items-center" onSubmit={handleAuth}>
                             <div className={`bg-gray-100 w-64 p-2    flex items-center mb-3`}>
                                 <FaRegEnvelope className="text-gray-400 m-2" />
                                 <input onChange={loginformdata} type="email" name="email"
-                                    placeholder="Email" className="bg-gray-100 outline-none flex-1" />
+                                    placeholder="Email" className={`bg-gray-100 ${erroestate?'text-red-700':''}   outline-none flex-1`} />
 
                             </div>
                             <div className="mb-1">

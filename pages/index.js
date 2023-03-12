@@ -6,8 +6,9 @@ import Card from '../components/Card'
 import Head from "next/head"
 import Link from 'next/link'
 import { useState } from 'react'
-
+import { useSession, signIn, signOut } from "next-auth/react";
 import { useRouter } from 'next/router'
+import { data } from 'autoprefixer'
 
 
 
@@ -15,15 +16,19 @@ import { useRouter } from 'next/router'
 
 
 export default function Home(props) {
-  
-  const Router = useRouter();
-  const [user, setuser] = useState({value:"null"});
 
-  
-  let [departments,setdepartments] = useState(props.data.data);
+  const Router = useRouter();
+  const { data: session } = useSession({
+    required: true
+  })
+  let [departments, setdepartments] = useState(props.data.data);
   let cards = departments.map(function (item) {
     return <Card url={item.url} Img={item.Img} course_name={item.course_name} key={item.key} fullform={item.fullform} />
   })
+
+  if (!session) {
+    return <></>
+  }
   return (
     <div>
       <Head>
@@ -39,16 +44,15 @@ export default function Home(props) {
 }
 
 
-export async function getServerSideProps(context)
-{
+export async function getServerSideProps(context) {
 
 
-  let dataPromise  = await fetch(`http://localhost:3000/api/department`);
+  let dataPromise = await fetch(`http://localhost:3000/api/department`);
   let data = await dataPromise.json()
-  
 
-  
+
+
   return {
-    props:{data:data}
+    props: { data: data }
   }
 }

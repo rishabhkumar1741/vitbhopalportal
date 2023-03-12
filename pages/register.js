@@ -1,6 +1,4 @@
 import Link from "next/link";
-import { useFormik } from "formik";
-import { registerValidate } from "../lib/validate";
 import { useRouter } from "next/router";
 import { useState } from "react";
 export default function  Register() {
@@ -10,8 +8,8 @@ export default function  Register() {
         lname: "",
         email: "",
         password: "",
-        city: "",
-        zip: ""
+        registration_number: "",
+       
     });
     function formdatainput(event) {
         const name = event.target.name;
@@ -20,24 +18,30 @@ export default function  Register() {
             return { ...pre, [name]: value }
         }
         )
-        console.log(userdata);
+       
     }
     async function formSubmit(event) {
         event.preventDefault();
+
+        if (!userdata.email || !userdata.email.includes('@') || !userdata.password) {
+            alert('Invalid details');
+            return;
+        }
         const option = {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(userdata)
         }
-        await fetch('http://localhost:3000/api/auth/signup', option).
-            then(res => res.json())
-            .then((data) => {
-                if (data) {
-                    router.push('http://localhost:3000')
-                }
-            })
-
-
+        const res = await fetch('http://localhost:3000/api/auth/signup', option);
+        const data = await res.json();
+        if(data.acknowledged)
+        {
+            router.push('/login');
+        }
+        else{
+            console.log("fuck");
+        }
+        
     }
 
     return (
@@ -84,21 +88,21 @@ export default function  Register() {
                         </div>
                     </div>
                     <div className="flex flex-wrap -mx-3 mb-2">
-                        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                        <div className="w-full md:w-2/3 px-3 mb-6 md:mb-0">
                             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-city">
-                                City
+                                Registration Number
                             </label>
-                            <input value={userdata.city} onChange={formdatainput} name="city" className={` appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500`} id="grid-city" type="text" placeholder="Albuquerque" />
+                            <input value={userdata.registration_number} onChange={formdatainput} name="registration_number" className={` appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500`} id="grid-city" type="text" placeholder="22ABC1000" />
 
                         </div>
 
-                        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                        {/* <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-zip">
                                 Zip
                             </label>
                             <input value={userdata.zip} onChange={formdatainput} name="zip" className={` appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500`} id="grid-zip" type="text" placeholder="90210" />
 
-                        </div>
+                        </div> */}
                     </div>
                     <div className="flex justify-center items-center bg-blue-500 mt-4">
                         <button className="p-2 text-white font-bold w-full " type='submit'>submit </button>

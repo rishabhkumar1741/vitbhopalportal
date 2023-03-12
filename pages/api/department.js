@@ -23,21 +23,21 @@ export default function handler(req, res) {
           "key": 4,
           "Img": "mess.png",
           "fullform":"Mess",
-          "url":"/hostel"
+          "url":"/mess"
         },
         {
           "key": 5,
         
           "Img": "canteen.jpg",
           "fullform":"Under Belly",
-          "url":"/hostel"
+          "url":"/canteen"
         },
         {
           "key": 6,
          
           "Img": "library.png",
           "fullform":"Library",
-          "url":"/hostel"
+          "url":"/library"
         }
       ]
       res.status(200).json({data: data })

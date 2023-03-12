@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
-
+import {useSession,signIn,signOut} from "next-auth/react";
 
 function Navbar() {
     const [toggle, settoggle] = useState(false);
@@ -33,6 +33,7 @@ function Navbar() {
                             <li className='hover:text-blue-400 m-2'><Link href='/'>Messages</Link></li>
                             <li className='hover:text-blue-400 m-2'><Link href='/'>Bookmarks</Link></li>
                             <li className='hover:text-blue-400 m-2'><Link href='/'>Profile</Link></li>
+                            <button onClick={()=>signOut()} >signOut</button>
                         </ul>
 
                     </div>

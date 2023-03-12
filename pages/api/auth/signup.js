@@ -1,28 +1,48 @@
-import connectMongo from "../../../database/conn"
-import Users from "../../../model/Schema";
-import { hash } from "bcryptjs";
-export default async function handler(req, res) {
-    connectMongo().catch(error => res.json({ erroe: "Connection Fail" }));
+import { MongoClient } from 'mongodb';
+import { hash } from 'bcryptjs';
 
-    //only post method
+async function handler(req, res) {
     if (req.method === 'POST') {
-        if (!req.body) {
-            return res.status(404).json({ erroe: "Dont have form data" })
+        //Getting email and password from body
+        const { email, password, fname, lname, registration_number } = req.body;
+        console.log(req.body);
+        // validation
+        if (!email || !email.includes('@') || !password) {
+            res.status(422).json({ message: "Invalid Data" });
+            return;
         }
-        const { fname, lname, password, email, city, zip } = req.body;
-        const checkexisting = await Users.findOne({ email });
-        if (checkexisting) {
-            return res.status(422).json({ message: "User already exists" })
-        }
-        Users.create({ fname, lname, email, city, zip, password: await hash(password, 12) }, function (err, data) {
-            if (err) {
-                return res.status(404).json({ err });
-            }
-            res.status(201).json({ status: true, user: data })
 
-        })
+        // connect to database 
+        const client = await MongoClient.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true });
+        const db = client.db();
+        //check existing 
+
+        const checkExisting = await db.collection('users').findOne({ email: email });
+        //send error response if duplicate user is found 
+        if (checkExisting) {
+            res.status(422).json({ message: "User already exists" })
+            client.close();
+            return;
+        }
+
+        // hash passwaord
+
+        const hashpassword = await hash(password, 12)
+        const status = await db.collection('users').insertOne({
+            ...req.body,
+            password: hashpassword
+
+            
+        });
+
+        //send success response
+        res.status(201).json({ message: "User created", ...status })
+
+        client.close();
     }
     else {
-        res.status(500).json({ message: "HTTP method not valid only post accepted" })
+        res.status(500).json({ message: "Route not valid " });
     }
 }
+
+export default handler;
