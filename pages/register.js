@@ -39,7 +39,7 @@ export default function  Register() {
             router.push('/login');
         }
         else{
-            console.log("fuck");
+            console.log("error");
         }
         
     }

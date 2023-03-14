@@ -1,8 +1,9 @@
 import { useState } from "react";
-
+import { useRouter } from "next/router";
 
 export default function carpenter() {
-    const [  formdaa, setformdata ] = useState(()=>{
+    const router = useRouter();
+    const [  formdata, setformdata ] = useState(()=>{
         return {
             fname:"",
             lname:"",
@@ -17,13 +18,14 @@ export default function carpenter() {
     function fillform(event) {
         console.log([event.target.name]);
         setformdata((prev)=>{
-            return {...formdaa,[event.target.name]:event.target.value}
+            return {...formdata,[event.target.name]:event.target.value}
         })
+        
     }
 
     function funoption()
     {
-        if(formdaa.category=="WIFI")
+        if(formdata.category=="WIFI")
         {
             return <>
             <option>Slow network</option>
@@ -37,7 +39,7 @@ export default function carpenter() {
             <option>WIFI router is not working</option>
             </>
         }
-        else if(formdaa.category=="Lift")
+        else if(formdata.category=="Lift")
         {
             return <>
             <option>Not working</option>
@@ -46,7 +48,7 @@ export default function carpenter() {
             <option>Long wait time and slow speed</option>
             </>
         }
-        else if(formdaa.category=="Electricity")
+        else if(formdata.category=="Electricity")
         {
             return <>
             <option>Power cut in rooms</option>
@@ -64,7 +66,7 @@ export default function carpenter() {
             <option>Broken lights switches and loose outlets </option>
             </>
         }
-        else if(formdaa.category=="Plumber")
+        else if(formdata.category=="Plumber")
         {
             return <>
             <option>Clogged drains and toilets</option>
@@ -80,7 +82,7 @@ export default function carpenter() {
             <option>Pipe corrosion</option>
             </>
         }
-        else if(formdaa.category=="Water Cooler")
+        else if(formdata.category=="Water Cooler")
         {
             return <>
             <option>No Water</option>
@@ -91,7 +93,7 @@ export default function carpenter() {
             <option>Water heater is not working</option>
             </>
         }
-        else if(formdaa.category=="Furniture")
+        else if(formdata.category=="Furniture")
         {
             return <>
             <option>Shortage of chair and tables</option>
@@ -99,7 +101,7 @@ export default function carpenter() {
             <option>Woobly chairs</option>
             </>
         }
-        else if(formdaa.category=="Hygiene")
+        else if(formdata.category=="Hygiene")
         {
             return <>
             <option>Poor water supply</option>
@@ -117,7 +119,26 @@ export default function carpenter() {
         
     } 
     
-    
+    async function sendcollegedata(event)
+    {
+        event.preventDefault();
+
+        const option = {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formdata)
+        }
+        const res = await fetch('http://localhost:3000/api/hostel/hosteldata', option);
+        const data = await res.json();
+        console.log(data);
+        if(data.created)
+        {
+            router.push('/');
+        }
+        else{
+            console.log("error");
+        }
+    }
    
     
 
@@ -127,7 +148,7 @@ export default function carpenter() {
                 <div className='bg-blue-500 text-white m-0 rounded-t-sm py-2 mb-4  text-center font-bold '>
                     Raise a Hostel Ticket
                 </div>
-                <form className="w-full max-w-lg ">
+                <form className="w-full max-w-lg " onSubmit={sendcollegedata}>
                     <div className="flex flex-wrap -mx-3 mb-4">
                         <div className={`w-full md:w-1/2 px-3 mb-6 md:mb-0 `} >
                             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-name">
@@ -200,7 +221,7 @@ export default function carpenter() {
                             </label>
                             <div className="relative">
                                 <select name="reason" 
-                                disabled={ formdaa.category=="" ? true : null}
+                                disabled={ formdata.category=="" ? true : null}
                                  onChange={fillform}  className={` disabled block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500`}  id="grid-reason">
 
                                     {funoption()}
