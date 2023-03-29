@@ -1,6 +1,6 @@
 import { Schema,model,models } from "mongoose";
 
-const hostelschema = new Schema({
+const academicschema = new Schema({
     firstName :{
         type:String,
         require:true,
@@ -42,7 +42,7 @@ const hostelschema = new Schema({
     }
 })
 
-const hostel = models.hostel || model("hostel",hostelschema);
+const academic = models.academicschema || model("hostel",academicschema);
 
 
-export default hostel;
+export default academic;

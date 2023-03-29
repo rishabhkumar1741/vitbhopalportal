@@ -21,8 +21,7 @@ export default async function (req, res) {
                 res.status(201).json({ "hasError": false, "data": saveissue })
             }
             else {
-                res.status(400).json({ "hasError": true, "erroeMessage": "SomeThing went wrong" })
-                
+                errorHandler("SomeThing went wrong", res);
             }
 
         } catch (error) {

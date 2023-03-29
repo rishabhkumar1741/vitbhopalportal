@@ -5,10 +5,12 @@ import Card from '../components/Card'
 
 import Head from "next/head"
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useRouter } from 'next/router'
 import { data } from 'autoprefixer'
+
+
 
 
 
@@ -21,13 +23,35 @@ export default function Home(props) {
   const { data: session } = useSession({
     required: true
   })
+ 
   let [departments, setdepartments] = useState(props.data.data);
+
   let cards = departments.map(function (item) {
     return <Card url={item.url} Img={item.Img} course_name={item.course_name} key={item.key} fullform={item.fullform} />
   })
+  useEffect(() => {
+    
+    fetch("/api/userdata", {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: "POST",
+      body: JSON.stringify({ "Email": "1741@gmail.com" })
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      console.log(data);
+    });
+
+  }, [])
+  
+ 
+
 
   if (!session) {
     return <></>
+
   }
   return (
     <div>

@@ -1,20 +1,21 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useRouter } from "next/router";
-
+import Navbar from '../../components/Navbar'
 export default function carpenter() {
     const router = useRouter();
     const [  formdata, setformdata ] = useState(()=>{
         return {
-            fname:"",
-            lname:"",
+            firstName:"",
+            lastName:"",
             email:"",
-            hostelno:"",
-            roomno:"",
+            hostelNo:"",
+            roomNo:"",
             category:"",
             reason:"",
             desc:""
         }
     })
+    
     function fillform(event) {
         console.log([event.target.name]);
         setformdata((prev)=>{
@@ -23,12 +24,14 @@ export default function carpenter() {
         
     }
 
+
     function funoption()
     {
         if(formdata.category=="WIFI")
         {
             return <>
-            <option>Slow network</option>
+            <option >--Please choose an option--</option>
+            <option  >Slow network</option>
             <option>Wifi cable gets damaged</option>
             <option>Connectivity issue with WIFI</option>
             <option>Router crashes regularly</option>
@@ -42,6 +45,7 @@ export default function carpenter() {
         else if(formdata.category=="Lift")
         {
             return <>
+            <option >--Please choose an option--</option>
             <option>Not working</option>
             <option>Stuck frequently</option>
             <option>Heating issues</option>
@@ -51,6 +55,7 @@ export default function carpenter() {
         else if(formdata.category=="Electricity")
         {
             return <>
+            <option >--Please choose an option--</option>
             <option>Power cut in rooms</option>
             <option>Switches of lights not working</option>
             <option>Fan is not working</option>
@@ -69,6 +74,7 @@ export default function carpenter() {
         else if(formdata.category=="Plumber")
         {
             return <>
+            <option >--Please choose an option--</option>
             <option>Clogged drains and toilets</option>
             <option>Leaky faucets and pipes</option>
             <option>Water heater issues</option>
@@ -85,6 +91,7 @@ export default function carpenter() {
         else if(formdata.category=="Water Cooler")
         {
             return <>
+            <option >--Please choose an option--</option>
             <option>No Water</option>
             <option>Taps are not Working</option>
             <option>Leakage</option>
@@ -96,6 +103,7 @@ export default function carpenter() {
         else if(formdata.category=="Furniture")
         {
             return <>
+            <option >--Please choose an option--</option>
             <option>Shortage of chair and tables</option>
             <option>Tables with uneven legs</option>
             <option>Woobly chairs</option>
@@ -104,6 +112,7 @@ export default function carpenter() {
         else if(formdata.category=="Hygiene")
         {
             return <>
+            <option >--Please choose an option--</option>
             <option>Poor water supply</option>
             <option>Guiser is not working </option>
             <option>Switches are not working</option>
@@ -122,27 +131,26 @@ export default function carpenter() {
     async function sendcollegedata(event)
     {
         event.preventDefault();
-
+        
         const option = {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formdata)
         }
-        const res = await fetch('http://localhost:3000/api/hostel/hosteldata', option);
+        const res = await fetch('http://localhost:3000/api/hostel', option);
         const data = await res.json();
-        console.log(data);
-        if(data.created)
+        if(data.hasError==false)
         {
-            router.push('/');
-        }
-        else{
-            console.log("error");
-        }
+            router.push("/");
+        } 
     }
    
     
 
     return (
+        <>
+        <Navbar></Navbar>
+
         <div className="grid h-screen place-items-center ">
             <div className="shadow-2xl p-10 pt-2  srounded-2xl">
                 <div className='bg-blue-500 text-white m-0 rounded-t-sm py-2 mb-4  text-center font-bold '>
@@ -154,7 +162,7 @@ export default function carpenter() {
                             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-name">
                                 First Name
                             </label>
-                            <input onChange={fillform} name="fname" className={`  appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white`} id="grid-first-name" type="text" placeholder="Jane" />
+                            <input onChange={fillform} name="firstName" className={`  appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white`} id="grid-first-name" type="text" placeholder="Jane" />
 
                         </div>
 
@@ -162,22 +170,22 @@ export default function carpenter() {
                             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-last-name">
                                 Last Name
                             </label>
-                            <input onChange={fillform} name="lname" className={`appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500`} id="grid-last-name" type="text" placeholder="Doe" />
+                            <input onChange={fillform} name="lastName" className={`appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500`} id="grid-last-name" type="text" placeholder="Doe" />
                         </div>
                     </div>
                     <div className="flex flex-wrap -mx-3 mb-4">
                         <div className={`w-full md:w-1/2 px-3 mb-6 md:mb-0 `} >
-                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-hostelno">
+                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-hostelNo">
                                 Hostel Number
                             </label>
-                            <input onChange={fillform} name="hostelno" className={`  appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white`} id="grid-hostelno" type="text" placeholder="111" />
+                            <input onChange={fillform} name="hostelNo" className={`  appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white`} id="grid-hostelNo" type="text" placeholder="111" />
                         </div>
 
                         <div className="w-full md:w-1/2 px-3">
-                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-roomno">
+                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-roomNo">
                                 Room Number
                             </label>
-                            <input onChange={fillform} name="roomno" className={`appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500`} id="grid-roomno" type="text" placeholder="000" />
+                            <input onChange={fillform} name="roomNo" className={`appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500`} id="grid-roomNo" type="text" placeholder="000" />
 
                         </div>
 
@@ -187,19 +195,19 @@ export default function carpenter() {
                     <div className="flex flex-wrap -mx-3 mb-4">
                         <div className="w-full px-3">
                             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-email">
-                                Email
+                                email
                             </label>
-                            <input onChange={fillform} name="email" className={` appearance-none block w-full  text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500`} id="grid-email" type='email' placeholder="Email" />
+                            <input onChange={fillform} name="email" className={` appearance-none block w-full  text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500`} id="grid-email" type='email' placeholder="email" />
                         </div>
                     </div>
                     <div className="flex flex-wrap -mx-3 mb-6">
                         <div className="w-full md:w-3/3 px-3 mb-6 md:mb-0">
                             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-category">
-                                Category
+                                category
                             </label>
                             <div className="relative">
                                 <select onChange={fillform} name="category" className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-category">
-                                    <option >Category option</option>
+                                    <option >category option</option>
                                     <option>WIFI</option>
                                     <option>Electricity</option>
                                     <option>Furniture</option>
@@ -245,5 +253,6 @@ export default function carpenter() {
             </div>
 
         </div>
+        </>
     )
 }

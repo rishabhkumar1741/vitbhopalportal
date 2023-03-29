@@ -1,4 +1,4 @@
-import dbConnect from '../../../database/conn'
+
 export const errorHandler = (data,res,code=400)=>{
     res.status(code).json({
         hasError:true,
@@ -26,7 +26,7 @@ export const validateAllSignInFields = (fields)=>{
 
 export const responseHandle = (data,res,code=200)=>{
     res.status(code).json({
-        hasError:false,
-        body:data
+        "hasError":false,
+        "body":data
     })
 }

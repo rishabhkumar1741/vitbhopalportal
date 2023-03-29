@@ -3,8 +3,9 @@ import { FaFacebookF, FaLinkedinIn, FaGoogle, FaRegEnvelope, FaGithub, FaSignInA
 import { MdLockOutline } from 'react-icons/md'
 import Link from "next/link"
 import { useState } from "react"
-import { signIn } from 'next-auth/react';
+import { getSession, signIn } from 'next-auth/react';
 import { useRouter } from "next/router"
+import { useSession } from "next-auth/react"
 
 
 
@@ -13,9 +14,10 @@ export default function Login(props) {
 
     const router = useRouter();
     const [erroestate,seterrorstate] = useState(false);
+    const { data: session } = useSession();
     const [logindata, setlogindata] = useState({
-        email: "",
-        password: ""
+        Email: "",
+        Password: ""
     });
 
     function loginformdata(event) {
@@ -27,21 +29,25 @@ export default function Login(props) {
 
     }
 
-   
+    
 
     const handleAuth = async (event) => {
+      
         event.preventDefault();
-        const res = await signIn('credentials', {
-            ...logindata,
-            redirect: false
+      
+        const result = await signIn("credentials", {
+            ...logindata,redirect:false
         })
-        if(res.ok)
+        if(result.ok)
         {
-            router.push("/")
+            router.push('/');
         }
-        else{
-            seterrorstate(true);
-        }
+        
+        
+        
+        
+   
+        
 
 
 
@@ -78,11 +84,11 @@ export default function Login(props) {
                                 <FaLinkedinIn className="text-sm" />
                             </button>
                         </div>
-                        <p className="text-gray-400 my-3">or use your email account  </p>
+                        <p className="text-gray-400 my-3">or use your Email account  </p>
                         <form className="flex flex-col items-center" onSubmit={handleAuth}>
                             <div className={`bg-gray-100 w-64 p-2    flex items-center mb-3`}>
                                 <FaRegEnvelope className="text-gray-400 m-2" />
-                                <input onChange={loginformdata} type="email" name="email"
+                                <input onChange={loginformdata} type="Email" name="Email"
                                     placeholder="Email" className={`bg-gray-100 ${erroestate?'text-red-700':''}   outline-none flex-1`} />
 
                             </div>
@@ -92,7 +98,7 @@ export default function Login(props) {
 
                             <div className="bg-gray-100 w-64 p-2 flex items-center mb-3 ">
                                 <MdLockOutline className="text-gray-400 m-2" />
-                                <input onChange={loginformdata} type="password" name="password" placeholder="password" className={`bg-gray-100 outline-none flex-1`} />
+                                <input onChange={loginformdata} type="Password" name="Password" placeholder="Password" className={`bg-gray-100 outline-none flex-1`} />
 
                             </div>
                             <div className="mb-1">

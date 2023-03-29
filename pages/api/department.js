@@ -30,19 +30,16 @@ export default function handler(req, res) {
         
           "Img": "canteen.jpg",
           "fullform":"Under Belly",
-          "url":"/canteen"
+          "url":"/uv"
         },
         {
           "key": 6,
          
           "Img": "library.png",
           "fullform":"Library",
-          "url":"/library"
+          "url":"/collegelibrary"
         }
       ]
       res.status(200).json({data: data })
-    
-     
-    
   }
 

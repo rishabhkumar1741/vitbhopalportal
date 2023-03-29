@@ -1,7 +1,8 @@
 import { useState } from "react";
-import Navbar from "../../components/Navbar";
+import { useRouter } from "next/router";
 
 export default function carpenter() {
+    const router = useRouter();
     const [  formdata, setformdata ] = useState(()=>{
         return {
             fname:"",
@@ -19,6 +20,7 @@ export default function carpenter() {
         setformdata((prev)=>{
             return {...formdata,[event.target.name]:event.target.value}
         })
+        
     }
 
     function funoption()
@@ -26,8 +28,7 @@ export default function carpenter() {
         if(formdata.category=="WIFI")
         {
             return <>
-            
-            <option >Slow network</option>
+            <option>Slow network</option>
             <option>Wifi cable gets damaged</option>
             <option>Connectivity issue with WIFI</option>
             <option>Router crashes regularly</option>
@@ -117,39 +118,37 @@ export default function carpenter() {
         
         
     } 
-
-    async function sendacademicdata (event)
+    
+    async function sendcollegedata(event)
     {
         event.preventDefault();
+
         const option = {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formdata)
         }
-        console.log(formdata);
-        const res = await fetch('http://localhost:3000/api/academic', option);
+        const res = await fetch('http://localhost:3000/api/hostel/hosteldata', option);
         const data = await res.json();
-        if(data.hasError==false)
+        console.log(data);
+        if(data.created)
         {
-            router.push("/");
-        } 
+            router.push('/');
+        }
+        else{
+            console.log("error");
+        }
     }
-
-
-    
-    
    
     
 
     return (
-        <>
-        <Navbar></Navbar>
         <div className="grid h-screen place-items-center ">
             <div className="shadow-2xl p-10 pt-2  srounded-2xl">
                 <div className='bg-blue-500 text-white m-0 rounded-t-sm py-2 mb-4  text-center font-bold '>
-                    Raise a Academic Ticket
+                    Raise a Hostel Ticket
                 </div>
-                <form onSubmit={sendacademicdata} className="w-full max-w-lg ">
+                <form className="w-full max-w-lg " onSubmit={sendcollegedata}>
                     <div className="flex flex-wrap -mx-3 mb-4">
                         <div className={`w-full md:w-1/2 px-3 mb-6 md:mb-0 `} >
                             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-name">
@@ -246,6 +245,5 @@ export default function carpenter() {
             </div>
 
         </div>
-        </>
     )
 }
