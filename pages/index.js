@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react'
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useRouter } from 'next/router'
 import { data } from 'autoprefixer'
+import Menu from '../components/Menu'
 
 
 
@@ -20,46 +21,55 @@ import { data } from 'autoprefixer'
 export default function Home(props) {
 
   const Router = useRouter();
-  const { data: session } = useSession({
+
+  const { data: session} = useSession({
     required: true
   })
- 
+
+
   let [departments, setdepartments] = useState(props.data.data);
+  let [user , setuser] = useState(()=>{
+    return null;
+  })
 
   let cards = departments.map(function (item) {
     return <Card url={item.url} Img={item.Img} course_name={item.course_name} key={item.key} fullform={item.fullform} />
   })
-  useEffect(() => {
-    
-    fetch("/api/userdata", {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      method: "POST",
-      body: JSON.stringify({ "Email": "1741@gmail.com" })
-    }).then((response) => {
-      return response.json();
-    }).then((data) => {
-      console.log(data);
-    });
 
-  }, [])
+
+
   
- 
+
+  
+
+  useEffect(()=>{ setuser(()=>{
+    let data = session?session.user:null;
+    console.log(data);
+    return data;
+  }); },[session])
 
 
-  if (!session) {
-    return <></>
 
-  }
+
+  
+
+
+  
+
+
+
+
+
   return (
     <div>
       <Head>
         <title>VIT Bhopal</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Navbar></Navbar>
+
+
+      <Navbar user= {user}></Navbar>
+
       <div className="my-16 mx-20  flex justify-between flex-wrap  ">
         {cards}
       </div>

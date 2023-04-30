@@ -14,6 +14,7 @@ if(req.method=='POST')
     
     if (user) {
         const userDoc = user._doc;
+        console.log(userDoc);
         delete userDoc.Password
         res.status(201).json({ "hasError": false, "data": userDoc })
 
@@ -23,7 +24,7 @@ if(req.method=='POST')
     }
         
     } catch (error) {
-        console.log("RUN");
+        
         res.status(400).json({ "hasError": true, "erroeMessage": error })
     }
 

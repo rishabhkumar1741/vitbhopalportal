@@ -13,8 +13,9 @@ import { useSession } from "next-auth/react"
 export default function Login(props) {
 
     const router = useRouter();
-    const [erroestate,seterrorstate] = useState(false);
+    const [erroestate, seterrorstate] = useState(false);
     const { data: session } = useSession();
+
     const [logindata, setlogindata] = useState({
         Email: "",
         Password: ""
@@ -29,27 +30,20 @@ export default function Login(props) {
 
     }
 
-    
+
 
     const handleAuth = async (event) => {
-      
+
         event.preventDefault();
-      
+
         const result = await signIn("credentials", {
-            ...logindata,redirect:false
+            ...logindata, redirect: false
         })
-        if(result.ok)
-        {
+        if (result.ok) {
+            
+            
             router.push('/');
         }
-        
-        
-        
-        
-   
-        
-
-
 
     }
 
@@ -89,7 +83,7 @@ export default function Login(props) {
                             <div className={`bg-gray-100 w-64 p-2    flex items-center mb-3`}>
                                 <FaRegEnvelope className="text-gray-400 m-2" />
                                 <input onChange={loginformdata} type="Email" name="Email"
-                                    placeholder="Email" className={`bg-gray-100 ${erroestate?'text-red-700':''}   outline-none flex-1`} />
+                                    placeholder="Email" className={`bg-gray-100 ${erroestate ? 'text-red-700' : ''}   outline-none flex-1`} />
 
                             </div>
                             <div className="mb-1">

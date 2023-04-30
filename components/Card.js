@@ -4,7 +4,7 @@ function Card(props) {
     return (
         <div className='w-96 rounded-lg mb-10'>
             <Link className='block' href={props.url}>
-                <Image width='350' height='350' className='object-cover h-full w-full rounded-t-lg ' src={`/${props.Img}`} alt="" />
+                <Image priority width='350' height='350' className='object-cover h-full w-full rounded-t-lg ' src={`/${props.Img}`} alt="" />
                 <div className=''>
                     <h1 className='text-center font-serif font-bold text-lg'> {props.fullform}</h1>
 
