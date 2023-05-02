@@ -1,48 +1,47 @@
-import { Schema,model,models } from "mongoose";
+import { Schema, model, models } from "mongoose";
 
 const academicschema = new Schema({
-    firstName :{
-        type:String,
-        require:true,
-        trim:true
-    },
-    lastName:{
-        type:String,
-        require:true,
-        trim:true
-    },
-    hostelNo:{
-        type:String,
-        require:true,
-        trim:true
-    },
-    roomNo:{
-        type:String,
-        require:true,
-        trim:true
-    },
-    email:{
-        type:String,
-        require:true,
-        trim:true
-    },
-    category:{
-        type:String,
-        require:true,
-        trim:true
-    },
-    reason:{
-        type:String,
-        require:true,
-        trim:true
-    },
-    Desc:{
-        type:String,
-        trim:true
-    }
-})
+  firstName: {
+    type: String,
+    require: true,
+    trim: true,
+  },
+  lastName: {
+    type: String,
+    require: true,
+    trim: true,
+  },
+  hostelNo: {
+    type: String,
+    require: true,
+    trim: true,
+  },
+  roomNo: {
+    type: String,
+    require: true,
+    trim: true,
+  },
+  email: {
+    type: String,
+    require: true,
+    trim: true,
+  },
+  category: {
+    type: String,
+    require: true,
+    trim: true,
+  },
+  reason: {
+    type: String,
+    require: true,
+    trim: true,
+  },
+  desc: {
+    type: String,
+    trim: true,
+  },
+});
 
-const academic = models.academicschema || model("hostel",academicschema);
-
+const academic = models.academicschema || model("academic", academicschema);
 
 export default academic;

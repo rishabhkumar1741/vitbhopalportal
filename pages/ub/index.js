@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Navbar from "../../components/Navbar";
+
 export default function carpenter() {
   const router = useRouter();
   const { data: session } = useSession({
@@ -45,7 +46,6 @@ export default function carpenter() {
     if (formdata.category == "WIFI") {
       return (
         <>
-          <option>--Please choose an option--</option>
           <option>Slow network</option>
           <option>Wifi cable gets damaged</option>
           <option>Connectivity issue with WIFI</option>
@@ -60,18 +60,15 @@ export default function carpenter() {
     } else if (formdata.category == "Lift") {
       return (
         <>
-          <option>--Please choose an option--</option>
           <option>Not working</option>
           <option>Stuck frequently</option>
           <option>Heating issues</option>
           <option>Long wait time and slow speed</option>
-          <option>Other</option>
         </>
       );
     } else if (formdata.category == "Electricity") {
       return (
         <>
-          <option>--Please choose an option--</option>
           <option>Power cut in rooms</option>
           <option>Switches of lights not working</option>
           <option>Fan is not working</option>
@@ -90,7 +87,6 @@ export default function carpenter() {
     } else if (formdata.category == "Plumber") {
       return (
         <>
-          <option>--Please choose an option--</option>
           <option>Clogged drains and toilets</option>
           <option>Leaky faucets and pipes</option>
           <option>Water heater issues</option>
@@ -107,7 +103,6 @@ export default function carpenter() {
     } else if (formdata.category == "Water Cooler") {
       return (
         <>
-          <option>--Please choose an option--</option>
           <option>No Water</option>
           <option>Taps are not Working</option>
           <option>Leakage</option>
@@ -119,7 +114,6 @@ export default function carpenter() {
     } else if (formdata.category == "Furniture") {
       return (
         <>
-          <option>--Please choose an option--</option>
           <option>Shortage of chair and tables</option>
           <option>Tables with uneven legs</option>
           <option>Woobly chairs</option>
@@ -128,7 +122,6 @@ export default function carpenter() {
     } else if (formdata.category == "Hygiene") {
       return (
         <>
-          <option>--Please choose an option--</option>
           <option>Poor water supply</option>
           <option>Guiser is not working </option>
           <option>Switches are not working</option>
@@ -142,15 +135,15 @@ export default function carpenter() {
     }
   }
 
-  async function sendcollegedata(event) {
+  async function sendubdata(event) {
     event.preventDefault();
-
     const option = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formdata),
     };
-    const res = await fetch("http://localhost:3000/api/hostel", option);
+    console.log(formdata);
+    const res = await fetch("http://localhost:3000/api/ub", option);
     const data = await res.json();
     if (data.hasError == false) {
       router.push("/");
@@ -168,13 +161,12 @@ export default function carpenter() {
   return (
     <>
       <Navbar user={user}></Navbar>
-
       <div className="grid h-screen place-items-center ">
         <div className="shadow-2xl p-10 pt-2  srounded-2xl">
           <div className="bg-blue-500 text-white m-0 rounded-t-sm py-2 mb-4  text-center font-bold ">
-            Raise a Hostel Ticket
+            Raise a Academic Ticket
           </div>
-          <form className="w-full max-w-lg " onSubmit={sendcollegedata}>
+          <form onSubmit={sendubdata} className="w-full max-w-lg ">
             <div className="flex flex-wrap -mx-3 mb-4">
               <div className={`w-full md:w-1/2 px-3 mb-6 md:mb-0 `}>
                 <label
@@ -216,7 +208,7 @@ export default function carpenter() {
               <div className={`w-full md:w-1/2 px-3 mb-6 md:mb-0 `}>
                 <label
                   className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                  htmlFor="grid-hostelNo"
+                  htmlFor="grid-hostelno"
                 >
                   Hostel Number
                 </label>
@@ -224,7 +216,7 @@ export default function carpenter() {
                   onChange={fillform}
                   name="hostelNo"
                   className={`  appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white`}
-                  id="grid-hostelNo"
+                  id="grid-hostelno"
                   type="text"
                   placeholder="111"
                 />
@@ -233,7 +225,7 @@ export default function carpenter() {
               <div className="w-full md:w-1/2 px-3">
                 <label
                   className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                  htmlFor="grid-roomNo"
+                  htmlFor="grid-roomno"
                 >
                   Room Number
                 </label>
@@ -241,7 +233,7 @@ export default function carpenter() {
                   onChange={fillform}
                   name="roomNo"
                   className={`appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500`}
-                  id="grid-roomNo"
+                  id="grid-roomno"
                   type="text"
                   placeholder="000"
                 />
@@ -254,7 +246,7 @@ export default function carpenter() {
                   className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                   htmlFor="grid-email"
                 >
-                  email
+                  Email
                 </label>
                 <input
                   value={user ? user.name.Email : ""}
@@ -263,7 +255,7 @@ export default function carpenter() {
                   className={` appearance-none block w-full  text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500`}
                   id="grid-email"
                   type="email"
-                  placeholder="email"
+                  placeholder="Email"
                 />
               </div>
             </div>
@@ -273,7 +265,7 @@ export default function carpenter() {
                   className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                   htmlFor="grid-category"
                 >
-                  category
+                  Category
                 </label>
                 <div className="relative">
                   <select
@@ -282,7 +274,7 @@ export default function carpenter() {
                     className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     id="grid-category"
                   >
-                    <option>category option</option>
+                    <option>Category option</option>
                     <option>WIFI</option>
                     <option>Electricity</option>
                     <option>Furniture</option>
