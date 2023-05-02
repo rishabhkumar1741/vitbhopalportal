@@ -4,13 +4,12 @@ export default async function handler(req, res) {
 if(req.method=='POST')
 {
     const Email = req.body.Email;
-    console.log(Email);
+    
     
     try {
         //connection to database
         await dbConnect();
-
-    const user = await User.findOne({ Email: Email }).exec();
+        const user = await User.findOne({ Email: Email }).exec();
     
     if (user) {
         const userDoc = user._doc;

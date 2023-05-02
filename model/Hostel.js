@@ -36,7 +36,7 @@ const hostelschema = new Schema({
         require:true,
         trim:true
     },
-    Desc:{
+    desc:{
         type:String,
         trim:true
     }

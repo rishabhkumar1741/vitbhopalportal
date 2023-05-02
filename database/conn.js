@@ -11,7 +11,6 @@ export default async function dbConnect()
 {
     if(global.mongoose && global.mongoose.conn)
     {
-       
         return global.mongoose.conn;
     }else{
         
@@ -19,14 +18,19 @@ export default async function dbConnect()
             useNewUrlParser:true,
             useUnifiedTopology:true,
             autoIndex:true
-        }).then(monngose=>mongoose);
+        }).then((monngose)=>mongoose);
         global.mongoose= {
             conn:await promise,
-            promise
+            promise,
         }
+      
 
         return await promise;
     }
 }
 
+
+
+
+// mongodb.js
 

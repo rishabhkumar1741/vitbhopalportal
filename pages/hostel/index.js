@@ -142,15 +142,27 @@ export default function carpenter() {
     async function sendcollegedata(event) {
         event.preventDefault();
 
-
         const option = {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formdata)
         }
         const res = await fetch('http://localhost:3000/api/hostel', option);
+        console.log(res);
         const data = await res.json();
         if (data.hasError == false) {
+            setformdata(() => {
+                return {
+                    firstName: "",
+                    lastName: "",
+                    email: "",
+                    hostelNo: "",
+                    roomNo: "",
+                    category: "",
+                    reason: "",
+                    desc: ""
+                }
+            })
             router.push("/");
         }
     }
@@ -264,7 +276,7 @@ export default function carpenter() {
                         </div>
                         <div className="" >
                             <label className="block text-bold uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 "> Description</label>
-                            <textarea onChange={fillform} name="desc" className="border border-solid border-gray-300 p-3 w-full rounded" />
+                            <textarea onChange={fillform} name="desc" className="border border-solid  border-gray-300 p-3 w-full rounded" />
                         </div>
                         <div className="flex justify-center items-center bg-blue-500 mt-4">
                             <button className="p-2 text-white font-bold w-full " type='submit'>submit </button>

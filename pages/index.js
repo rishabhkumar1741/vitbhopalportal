@@ -62,6 +62,7 @@ export default function Home(props) {
 
   return (
     <div>
+      
       <Head>
         <title>VIT Bhopal</title>
         <link rel="icon" href="/favicon.ico" />
