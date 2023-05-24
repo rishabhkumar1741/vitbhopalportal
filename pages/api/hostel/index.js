@@ -2,6 +2,7 @@
 
 import dbConnect from '../../../database/conn';
 import Hostel from '../../../model/Hostel'
+
 export default async function (req, res) {
 
     if (req.method !== 'POST') {
@@ -39,3 +40,4 @@ export default async function (req, res) {
     }
 
 }
+ 

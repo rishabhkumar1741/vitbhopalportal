@@ -1,7 +1,8 @@
 
 import { errorHandler } from '../../../utils/common'
 import dbConnect from '../../../database/conn';
-import Hostel from '../../../model/Hostel'
+
+import Academic from '../../../model/Academic'
 export default async function (req, res) {
     if (req.method !== 'POST') {
         res.status(400).json({ "hasError": true, "erroeMessage": "Invalid Request" })
@@ -13,7 +14,7 @@ export default async function (req, res) {
             await dbConnect();
 
 
-            const hostelissue = new Hostel({ ...req.body })
+            const hostelissue = new Academic({ ...req.body })
             const saveissue = await hostelissue.save();
             console.log(saveissue);
             if (saveissue) {

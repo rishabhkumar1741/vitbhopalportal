@@ -1,6 +1,6 @@
 import { Schema,model,models } from "mongoose";
 
-const academicschema = new Schema({
+const uvschema = new Schema({
     firstName :{
         type:String,
         require:true,
@@ -42,7 +42,7 @@ const academicschema = new Schema({
     }
 })
 
-const academic = models.academic || model("academic",academicschema);
+const uv = models.uv || model("uv",uvschema);
 
 
-export default academic;
+export default uv;

@@ -1,7 +1,14 @@
 import { useState } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import Navbar from "../../components/Navbar";
 
 export default function carpenter() {
+    const router = useRouter();
+    const { data: session } = useSession({
+        required: true
+    })
     const [  formdata, setformdata ] = useState(()=>{
         return {
             fname:"",
@@ -14,10 +21,19 @@ export default function carpenter() {
             desc:""
         }
     })
+    let [user, setuser] = useState(() => {
+        return null;
+    })
     function fillform(event) {
-        console.log([event.target.name]);
+        if (session) {
+            setformdata((prev) => {
+                return { ...prev, firstName: session.user.name.FirstName, lastName: session.user.name.LastName, email: session.user.name.Email };
+            })
+
+        }
+       
         setformdata((prev)=>{
-            return {...formdata,[event.target.name]:event.target.value}
+            return {...prev,[event.target.name]:event.target.value}
         })
     }
 
@@ -131,9 +147,31 @@ export default function carpenter() {
         const data = await res.json();
         if(data.hasError==false)
         {
+            setformdata(() => {
+                return {
+                    firstName: "",
+                    lastName: "",
+                    email: "",
+                    hostelNo: "",
+                    roomNo: "",
+                    category: "",
+                    reason: "",
+                    desc: ""
+                }
+            })
             router.push("/");
         } 
     }
+    useEffect(() => {
+        setuser(() => {
+            let data = session ? session.user : null;
+
+
+            return data;
+        });
+
+
+    }, [session])
 
 
     
@@ -155,7 +193,7 @@ export default function carpenter() {
                             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-name">
                                 First Name
                             </label>
-                            <input onChange={fillform} name="fname" className={`  appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white`} id="grid-first-name" type="text" placeholder="Jane" />
+                            <input onChange={fillform} value={user ? user.name.FirstName : ""} name="fname" className={`  appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white`} id="grid-first-name" type="text" placeholder="Jane" />
 
                         </div>
 
@@ -163,7 +201,7 @@ export default function carpenter() {
                             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-last-name">
                                 Last Name
                             </label>
-                            <input onChange={fillform} name="lname" className={`appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500`} id="grid-last-name" type="text" placeholder="Doe" />
+                            <input onChange={fillform} value={user ? user.name.LastName : ""} name="lname" className={`appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500`} id="grid-last-name" type="text" placeholder="Doe" />
                         </div>
                     </div>
                     <div className="flex flex-wrap -mx-3 mb-4">
@@ -190,7 +228,7 @@ export default function carpenter() {
                             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-email">
                                 Email
                             </label>
-                            <input onChange={fillform} name="email" className={` appearance-none block w-full  text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500`} id="grid-email" type='email' placeholder="Email" />
+                            <input onChange={fillform} value={user ? user.name.Email : ""} name="email" className={` appearance-none block w-full  text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500`} id="grid-email" type='email' placeholder="Email" />
                         </div>
                     </div>
                     <div className="flex flex-wrap -mx-3 mb-6">
