@@ -135,7 +135,7 @@ export default function carpenter() {
     }
   }
 
-  async function sendLibrarydata(event) {
+  async function sendubdata(event) {
     event.preventDefault();
     const option = {
       method: "POST",
@@ -143,7 +143,7 @@ export default function carpenter() {
       body: JSON.stringify(formdata),
     };
     console.log(formdata);
-    const res = await fetch("http://localhost:3000/api/library", option);
+    const res = await fetch("http://localhost:3000/api/ub", option);
     const data = await res.json();
     if (data.hasError == false) {
       router.push("/");
@@ -166,7 +166,7 @@ export default function carpenter() {
           <div className="bg-blue-500 text-white m-0 rounded-t-sm py-2 mb-4  text-center font-bold ">
             Raise a Academic Ticket
           </div>
-          <form onSubmit={sendLibrarydata} className="w-full max-w-lg ">
+          <form onSubmit={sendubdata} className="w-full max-w-lg ">
             <div className="flex flex-wrap -mx-3 mb-4">
               <div className={`w-full md:w-1/2 px-3 mb-6 md:mb-0 `}>
                 <label
