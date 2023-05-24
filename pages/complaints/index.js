@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import Complain from "../../components/Complain";
 import { useSession } from "next-auth/react";
 import Navbar from "../../components/Navbar";
+import { data } from "autoprefixer";
 const Index = () => {
 
 
@@ -18,11 +19,13 @@ const Index = () => {
     useEffect(() => {
         setuser(() => {
             let data = session ? session.user : null;
+            
             if (data) {
+                console.log(data.email);
                 fetch('http://localhost:3000/api/complain?' + new URLSearchParams({
-                    Email: 'pandit@gmail.com',
+                    Email: data.email,
                 })).then((apidata) => apidata.json()).then((apidata) => {
-                    console.log(apidata.data);
+                    
                     sethostelcomplain(apidata.data);
 
                 })
@@ -31,6 +34,8 @@ const Index = () => {
 
         });
     }, [session])
+
+   
 
 
 

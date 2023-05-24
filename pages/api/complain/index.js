@@ -8,11 +8,11 @@ export default async function productsHandler(req, res) {
 
         try {
             //connection to database
-            console.log("222aaaa2");
+            
             await dbConnect();
 
             const data = await Hostel.find({ email: Email }).exec();
-            console.log(data);
+            
             if (data) {
                 res.status(201).json({ "hasError": false, "data": data })
             }
